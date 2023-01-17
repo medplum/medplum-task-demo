@@ -8,10 +8,19 @@ export function LandingPage(): JSX.Element {
     <Document>
       <h1>Welcome!</h1>
       <p>
-        This "Hello World" example demonstrates how to build a simple React application that fetches Patient data from
-        Medplum. If you haven't already done so, <a href="https://app.medplum.com/register">register</a> for Medplum
-        Project. After that you can sign into your project by clicking the link below.
+        This app demonstrates how to use the Medplum SDK to work with{' '}
+        <Anchor href="https://www.hl7.org/fhir/task" target="_blank">
+          FHIR Tasks
+        </Anchor>
+        .
       </p>
+      <ul>
+        <li>Create a task</li>
+        <li>List tasks</li>
+        <li>Filter tasks</li>
+        <li>Assign a task to a user</li>
+        <li>Complete a task</li>
+      </ul>
       <p>
         <Anchor to="/signin" component={Link}>
           Sign in
