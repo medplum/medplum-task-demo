@@ -1,9 +1,9 @@
 import { Tooltip, UnstyledButton } from '@mantine/core';
-import { showNotification } from '@mantine/notifications';
+import { notifications } from '@mantine/notifications';
 import { createReference, formatDateTime, getDisplayString, MedplumClient, PatchOperation } from '@medplum/core';
 import { Practitioner, Task } from '@medplum/fhirtypes';
 import { CodeableConceptDisplay, useMedplum } from '@medplum/react';
-import { IconCircleCheck, IconCircleX, IconEdit, IconUser, IconUserSearch } from '@tabler/icons';
+import { IconCircleCheck, IconCircleX, IconEdit, IconUser, IconUserSearch } from '@tabler/icons-react';
 import React, { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStyles } from './TaskRow.styles';
@@ -30,7 +30,7 @@ export function TaskRow(props: TaskRowProps): JSX.Element {
       e.stopPropagation();
       e.preventDefault();
       await testAndUpdateTask(medplum, task, 'accepted', profile);
-      showNotification({
+      notifications.show({
         color: 'blue',
         icon: <IconCircleCheck />,
         title: 'Success',
@@ -38,7 +38,7 @@ export function TaskRow(props: TaskRowProps): JSX.Element {
       });
       props.onChange();
     },
-    [medplum]
+    [medplum, profile, task, props]
   );
 
   const markAsCompleted = useCallback(
@@ -46,7 +46,7 @@ export function TaskRow(props: TaskRowProps): JSX.Element {
       e.stopPropagation();
       e.preventDefault();
       await testAndUpdateTask(medplum, task, 'completed');
-      showNotification({
+      notifications.show({
         color: 'teal',
         icon: <IconCircleCheck />,
         title: 'Success',
@@ -54,7 +54,7 @@ export function TaskRow(props: TaskRowProps): JSX.Element {
       });
       props.onChange();
     },
-    [medplum]
+    [medplum, task, props]
   );
 
   const editTask = useCallback(
@@ -63,7 +63,7 @@ export function TaskRow(props: TaskRowProps): JSX.Element {
       e.preventDefault();
       window.open(`https://app.medplum.com/Task/${task.id}`, '_blank', 'noopener,noreferrer');
     },
-    [medplum]
+    [task]
   );
 
   const cancelTask = useCallback(
@@ -71,7 +71,7 @@ export function TaskRow(props: TaskRowProps): JSX.Element {
       e.stopPropagation();
       e.preventDefault();
       await testAndUpdateTask(medplum, task, 'cancelled');
-      showNotification({
+      notifications.show({
         color: 'red',
         icon: <IconCircleCheck />,
         title: 'Success',
@@ -79,7 +79,7 @@ export function TaskRow(props: TaskRowProps): JSX.Element {
       });
       props.onChange();
     },
-    [medplum]
+    [medplum, task, props]
   );
 
   const buttons = [
